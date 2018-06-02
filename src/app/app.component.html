@@ -1,0 +1,39 @@
+<div class="container-fluid">
+    <div class="justify-content-md-center mt-3">
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <input type="text" class="form-control" (change)="onNameChange()" [(ngModel)]="taskName"
+                       placeholder="What are your working on?">
+            </div>
+            <div class="form-group col-md-2">
+                <select class="form-control" (change)="onProjectChange()" [(ngModel)]="selectedProject">
+                    <option *ngFor="let project of projects" [value]="project.name">{{project.name}}</option>
+                </select>
+            </div>
+            <div class="form-group col-md-2">
+                <input type="text" class="form-control" [(ngModel)]="timerFormated" placeholder="0 sec">
+            </div>
+            <div class="form-group col-md-2">
+                <button class="btn btn-primary mb-2" *ngIf="!isStartedTimer" (click)="startTimer()">Start</button>
+                <button class="btn btn-danger mb-2" *ngIf="isStartedTimer" (click)="stopTimer()">Stop</button>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div *ngFor="let item of items">
+            <p class="col-md-12 h1">{{item.date | amDateFormat:'ddd DD MMM' | dateCheck }}</p>
+            <ul class="list-inline" *ngFor="let timer of item.timers">
+                <li class="list-inline-item h5 col-md-4">{{timer.task}}</li>
+                <li class="list-inline-item h5 text-primary col-md-2">{{timer.project}}</li>
+                <li class="list-inline-item col-md-1" (click)="continueTask(timer)">
+                    <fa class="cursor-pointer" [name]="'play'" [size]="1"></fa>
+                </li>
+                <li class="list-inline-item h5">{{timer.duration}}</li>
+                <li class="list-inline-item h6">
+                    {{timer.start | amParse:'x' | amDateFormat:'HH:mm' }}-
+                    {{ timer.stop | amParse:'x' | amDateFormat:'HH:mm'}}
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
